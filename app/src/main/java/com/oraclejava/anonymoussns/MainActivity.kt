@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 val message = p0.value.toString()
                 Log.d(TAG,message)
-                binding.hello.text = message
+                //binding.hello.text = message
             }
 
             override fun onCancelled(p0: DatabaseError) {
