@@ -7,4 +7,6 @@ data class Post(
     val writeTime: Any,
     val bgUri: String,
     val commentCount: Int = 0
-)
+) {
+    constructor() : this("", "", "", Any(), "")
+}

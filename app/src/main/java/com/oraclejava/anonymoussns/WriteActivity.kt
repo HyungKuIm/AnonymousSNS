@@ -1,7 +1,8 @@
 package com.oraclejava.anonymoussns
 
+import android.content.ContentResolver
+import android.content.Context
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
@@ -17,6 +19,7 @@ import com.oraclejava.anonymoussns.databinding.ActivityWriteBinding
 import com.oraclejava.anonymoussns.model.Comment
 import com.oraclejava.anonymoussns.model.Post
 import com.squareup.picasso.Picasso
+
 
 class WriteActivity : AppCompatActivity() {
 
@@ -31,11 +34,15 @@ class WriteActivity : AppCompatActivity() {
         "android.resource://com.oraclejava.anonymoussns/drawable/sora3",
         "android.resource://com.oraclejava.anonymoussns/drawable/sora4",
         "android.resource://com.oraclejava.anonymoussns/drawable/sora5",
-        "android.resource://com.oraclejava.anonymoussns/drawable/sora6"
+        "android.resource://com.oraclejava.anonymoussns/drawable/sora6",
+//        convertUrlFromDrawableResId(applicationContext, R.drawable.sora),
+//        convertUrlFromDrawableResId(applicationContext, R.drawable.sora2),
+//        convertUrlFromDrawableResId(applicationContext, R.drawable.sora3),
     )
 
     // 글쓰기 모드를 저장하는 변수
     var mode = "post"
+
 
     // 댓글쓰기인 경우 글의 ID
     var postId = ""
@@ -68,7 +75,7 @@ class WriteActivity : AppCompatActivity() {
             }
             if (mode == "post") {
 
-                // Firebase 의 Posts 참조에서 객체를 저장하기 위한 새로운 카를 생성하고 참조를 newRef 에 저장
+                // Firebase 의 Posts 참조에서 객체를 저장하기 위한 새로운 키를 생성하고 참조를 newRef 에 저장
                 val newRef = FirebaseDatabase.getInstance().getReference("Posts").push()
                 // Post 객체 생성
                 val post = Post(
@@ -86,7 +93,7 @@ class WriteActivity : AppCompatActivity() {
                 finish()
             } else {
 
-                // Firebase 의 Posts 참조에서 객체를 저장하기 위한 새로운 카를 생성하고 참조를 newRef 에 저장
+                // Firebase 의 Posts 참조에서 객체를 저장하기 위한 새로운 키를 생성하고 참조를 newRef 에 저장
                 val newRef = FirebaseDatabase.getInstance().getReference("Comments/$postId").push()
                 val comment = Comment(
                     newRef.key.toString(),
@@ -162,5 +169,18 @@ class WriteActivity : AppCompatActivity() {
                     .into(binding.writeBackground)
             }
         }
+    }
+
+    fun convertUrlFromDrawableResId(context: Context, drawableResId: Int): String {
+        val sb = StringBuilder()
+        sb.append(ContentResolver.SCHEME_ANDROID_RESOURCE)
+        sb.append("://")
+        sb.append(context.getResources().getResourcePackageName(drawableResId))
+        sb.append("/")
+        sb.append(context.getResources().getResourceTypeName(drawableResId))
+        sb.append("/")
+        sb.append(context.getResources().getResourceEntryName(drawableResId))
+        return sb.toString()
+        // Uriに変換したい時は Uri.parse(sb.toString())
     }
 }

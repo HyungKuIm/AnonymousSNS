@@ -88,13 +88,13 @@
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
             android:adjustViewBounds="true"
-            app:layout_constraintEnd_toStartOf="@+id/commentCountTextView"
+            app:layout_constraintEnd_toStartOf="@+id/commentCountText"
             app:layout_constraintTop_toTopOf="@+id/guideline"
             app:layout_constraintBottom_toBottomOf="@id/clockImage"
             app:srcCompat="@drawable/comment" />
 
         <TextView
-            android:id="@+id/commentCountTextView"
+            android:id="@+id/commentCountText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
